@@ -116,7 +116,6 @@ export default function PendapatanPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start">
         <div className="space-y-4">
           <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
-            <div className="absolute -top-16 -right-16 w-32 h-32 bg-emerald-500/10 rounded-full" />
             <CardContent className="relative z-10 p-6 space-y-5 flex flex-col h-full">
               <div className="flex items-start justify-between flex-wrap gap-4">
                 <div>
@@ -187,7 +186,7 @@ export default function PendapatanPage() {
 
         <div className="space-y-4">
           <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
-            <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 rounded-full" />
+            <div className="absolute -top-8 -right-8 w-32 h-32 bg-emerald-500/15 rounded-full blur-2xl" />
             <CardContent className="relative z-10 p-5 space-y-4">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-emerald-50 rounded-lg flex items-center justify-center">

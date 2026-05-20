@@ -80,14 +80,14 @@ export default function EwastePage() {
       title: "Anatomi Baterai Lithium",
       description:
         "Membongkar siklus hidup komponen paling krusial dalam mobilitas modern.",
-      image: "/images/seniPemulihanKaca.webp",
+      image: "/images/anatomiBateraiLithium.webp",
     },
     {
       category: "TEKNIK",
       title: "Seni Pemulihan Kaca",
       description:
         "Bagaimana teknologi mengembalikan integritas struktural layar yang hancur tanpa limbah ekstra.",
-      image: "/images/anatomiBateraiLithium.webp",
+      image: "/images/seniPemulihanKaca.webp",
     },
     {
       category: "DAMPAK",
@@ -156,8 +156,7 @@ export default function EwastePage() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden md:col-span-2 bg-emerald-50/50 rounded-3xl p-8 text-center flex flex-col justify-center items-center h-full min-h-[180px]">
-              <div className="absolute -top-8 -left-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl" />
+            <div className="relative overflow-hidden md:col-span-2 bg-emerald-50/50 rounded-3xl p-8 text-center flex flex-col justify-center items-center h-full min-h-45">
               <span className="text-[10px] font-bold text-emerald-800/60 tracking-widest uppercase mb-2">
                 Estimasi Emisi yang Dicegah
               </span>

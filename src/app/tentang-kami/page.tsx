@@ -116,8 +116,7 @@ export default function TentangKamiPage() {
       <section className="w-full py-12 px-4 max-w-7xl mx-auto font-sans">
         <FadeIn>
           <Card className="relative w-full border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[3rem] bg-white overflow-hidden">
-            <div className="absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/15 rounded-full blur-3xl" />
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl" />
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl" />
             <CardContent className="relative z-10 pt-16 pb-20 px-0">
               <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-16">
                 Dampak Nyata

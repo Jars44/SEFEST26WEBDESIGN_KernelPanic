@@ -172,7 +172,7 @@ export default function ServisPage() {
                   </p>
 
                   {job.image && (
-                    <div className="relative w-full h-28 bg-[#1d1d1f] rounded-xl overflow-hidden">
+                    <div className="relative w-full h-50 bg-[#1d1d1f] rounded-xl overflow-hidden">
                       <Image
                         src="/images/ipad-air-gen5.jpg"
                         alt="iPad Air Gen 5 being repaired"
