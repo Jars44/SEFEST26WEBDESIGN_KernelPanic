@@ -54,9 +54,9 @@ export default function RootPage() {
               <Wrench className="w-4 h-4 mr-1" />
               <span className="text-sm font-medium">Restorasi Presisi</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-5xl text-black font-bold tracking-tight">
               Jangan Dibuang,{" "}
-              <span className="text-green-800">Mari Perbaiki.</span>
+              <span className="text-green-700">Mari Perbaiki.</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-prose">
               Layanan perbaikan perangkat andal yang mengembalikan fungsi optimal
@@ -70,7 +70,9 @@ export default function RootPage() {
                   <ArrowRight />
                 </Link>
               </Button>
-              <Button variant="outline">Pelajari Lebih Lanjut</Button>
+              <Button asChild variant="outline">
+                <Link href="/tentang-kami">Pelajari Lebih Lanjut</Link>
+              </Button>
             </div>
           </div>
           <div className="relative w-full max-w-sm md:max-w-md mx-auto h-72 md:h-[26rem] bg-muted rounded-xl overflow-hidden flex flex-col">
