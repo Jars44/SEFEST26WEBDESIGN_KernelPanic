@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const SHELL_EXCLUDED = ["/app", "/user", "/servis", "/tracking"];
+const HEADER_EXCLUDED = ["/app", "/user", "/servis", "/tracking"];
+const FOOTER_EXCLUDED = ["/app", "/user", "/servis", "/tracking", "/login", "/register"];
 
 export default function ConditionalShell({
   children,
@@ -12,13 +13,14 @@ export default function ConditionalShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const excluded = SHELL_EXCLUDED.some((p) => pathname.startsWith(p));
-  if (excluded) return <div className="flex-1 flex flex-col">{children}</div>;
+  const hideHeader = HEADER_EXCLUDED.some((p) => pathname.startsWith(p));
+  const hideFooter = FOOTER_EXCLUDED.some((p) => pathname.startsWith(p));
+
   return (
     <>
-      <Header />
-      {children}
-      <Footer />
+      {!hideHeader && <Header />}
+      <div className="flex-1 flex flex-col">{children}</div>
+      {!hideFooter && <Footer />}
     </>
   );
 }

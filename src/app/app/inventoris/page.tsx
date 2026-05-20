@@ -166,7 +166,7 @@ export default function InventorisPage() {
             key={s.label}
             className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white"
           >
-            <div className="absolute -top-6 -left-6 w-20 h-20 bg-emerald-500/20 rounded-full blur-2xl" />
+            <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 rounded-full" />
             <CardContent className="relative z-10 p-5 flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-bold tracking-widest text-[#86868b] uppercase mb-1">

@@ -8,8 +8,8 @@ import {
   AlertTriangle,
   Recycle,
   Handshake,
-  MessageCircle,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Input } from "@/components/ui/input";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
@@ -165,7 +165,7 @@ export default function HelpCenterPage() {
               className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl h-12 px-8 gap-2 font-bold transition-colors"
               onClick={() => toast.info("Membuka WhatsApp...")}
             >
-              <MessageCircle className="w-5 h-5 fill-current" />
+              <WhatsAppIcon className="w-5 h-5" />
               Hubungi via WhatsApp
             </Button>
           </CardContent>

@@ -93,7 +93,7 @@ export function MobileDock({ variant }: { variant: "app" | "user" }) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors",
+                  "relative flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors",
                   isActive
                     ? "text-emerald-600 bg-emerald-50"
                     : "text-[#86868b] hover:text-[#1d1d1f]"
@@ -101,6 +101,9 @@ export function MobileDock({ variant }: { variant: "app" | "user" }) {
               >
                 <item.icon className="w-5 h-5" strokeWidth={isActive ? 2.2 : 1.8} />
                 <span className="text-[10px] font-medium leading-none">{item.label}</span>
+                {isActive && (
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-emerald-600 rounded-full" />
+                )}
               </Link>
             );
           })}

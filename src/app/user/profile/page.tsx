@@ -121,7 +121,7 @@ export default function UserProfilePage() {
                 ].map((field) => (
                   <div key={field.label}>
                     <p className="text-[10px] font-bold tracking-widest text-[#86868b] uppercase mb-1">{field.label}</p>
-                    <p className="text-sm text-[#1d1d1f] font-medium">{field.value}</p>
+                    <p className="text-sm text-[#1d1d1f] font-medium break-all">{field.value}</p>
                   </div>
                 ))}
               </div>

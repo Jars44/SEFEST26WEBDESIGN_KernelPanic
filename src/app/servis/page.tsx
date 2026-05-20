@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FadeIn } from "@/components/motion/fade-in";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -16,8 +17,14 @@ import {
   MapPin,
   ShieldCheck,
   ArrowRight,
+  Battery,
+  PowerOff,
+  Camera,
+  Volume2,
+  Plus,
 } from "lucide-react";
 import Link from "next/link";
+import ServisHeader from "@/components/layouts/ServisHeader";
 
 type Step =
   | "device"
@@ -35,12 +42,12 @@ const DEVICES = [
 ];
 
 const ISSUES = [
-  "Layar Pecah",
-  "Baterai Bocor",
-  "Mati Total",
-  "Kamera Rusak",
-  "Speaker Sember",
-  "Permasalahan lain",
+  { id: "layar", label: "Layar Pecah", icon: Smartphone },
+  { id: "baterai", label: "Baterai Bocor", icon: Battery },
+  { id: "mati", label: "Mati Total", icon: PowerOff },
+  { id: "kamera", label: "Kamera Rusak", icon: Camera },
+  { id: "speaker", label: "Speaker Sember", icon: Volume2 },
+  { id: "lain", label: "Permasalahan lain", icon: Plus },
 ];
 
 function StepBar({ current }: { current: "device" | "issues" | "estimate" | "done" }) {
@@ -98,14 +105,20 @@ function StepBar({ current }: { current: "device" | "issues" | "estimate" | "don
 
 export default function ServisPage() {
   const [step, setStep] = useState<Step>("device");
+  const [direction, setDirection] = useState<1 | -1>(1);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [customIssue, setCustomIssue] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
+  function goTo(next: Step, dir: 1 | -1 = 1) {
+    setDirection(dir);
+    setStep(next);
+  }
+
   useEffect(() => {
     if (step === "searching") {
-      const timer = setTimeout(() => setStep("found"), 2000);
+      const timer = setTimeout(() => goTo("found"), 2000);
       return () => clearTimeout(timer);
     }
   }, [step]);
@@ -116,10 +129,21 @@ export default function ServisPage() {
     );
   }
 
+  const showHeader = !["searching", "found", "success"].includes(step);
+
+  const slideVariants = {
+    enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+  };
+
   return (
-    <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center justify-center py-12 px-4">
-      {step === "device" && (
-        <FadeIn className="w-full">
+    <>
+      <ServisHeader visible={showHeader} />
+      <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center justify-center pt-20 pb-24 px-4 overflow-x-hidden">
+      <AnimatePresence mode="wait" custom={direction}>
+      {step === "device" && (<>
+        <motion.div key="device" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-2xl mx-auto">
           <StepBar current="device" />
           <div className="text-center mb-8">
@@ -160,21 +184,21 @@ export default function ServisPage() {
               </button>
             ))}
           </div>
-          <div className="flex justify-end mt-auto pt-8">
-            <Button
-              onClick={() => selectedDevice && setStep("issues")}
-              disabled={!selectedDevice}
-              className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2 disabled:opacity-40"
-            >
-              Lanjut <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
         </div>
-        </FadeIn>
-      )}
+        </motion.div>
+        <div className="fixed bottom-6 left-6 right-6 flex justify-end z-40 pointer-events-none">
+          <Button
+            onClick={() => selectedDevice && goTo("issues")}
+            disabled={!selectedDevice}
+            className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2 disabled:opacity-40 pointer-events-auto"
+          >
+            Lanjut <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </>)}
 
-      {step === "issues" && (
-        <FadeIn className="w-full">
+      {step === "issues" && (<>
+        <motion.div key="issues" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-2xl mx-auto">
           <StepBar current="issues" />
           <div className="text-center mb-8">
@@ -185,20 +209,23 @@ export default function ServisPage() {
               Pilih satu atau lebih masalah yang kamu alami
             </p>
           </div>
-          <div className="flex flex-wrap gap-3 justify-center mb-10">
-            {ISSUES.map((issue) => {
-              const selected = selectedIssues.includes(issue);
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+            {ISSUES.map(({ id, label, icon: Icon }) => {
+              const selected = selectedIssues.includes(label);
               return (
                 <button
-                  key={issue}
-                  onClick={() => toggleIssue(issue)}
-                  className={`px-5 py-2.5 rounded-full border text-sm font-medium transition-all cursor-pointer ${
+                  key={id}
+                  onClick={() => toggleIssue(label)}
+                  className={`rounded-2xl border p-6 flex flex-col items-start gap-3 transition-all bg-white shadow-[0_2px_15px_rgba(0,0,0,0.03)] cursor-pointer ${
                     selected
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-700 ring-1 ring-emerald-300"
-                      : "border-[#e6e6ea] bg-white text-[#3f4941] hover:border-emerald-300"
+                      ? "border-emerald-500 ring-2 ring-emerald-200"
+                      : "border-[#e6e6ea] hover:border-emerald-300"
                   }`}
                 >
-                  {issue === "Permasalahan lain" ? `${issue} +` : issue}
+                  <Icon className={`w-5 h-5 ${selected ? "text-emerald-700" : "text-[#3f4941]"}`} />
+                  <span className={`text-sm font-semibold ${selected ? "text-emerald-700" : "text-[#1d1d1f]"}`}>
+                    {label}
+                  </span>
                 </button>
               );
             })}
@@ -213,28 +240,28 @@ export default function ServisPage() {
               />
             </div>
           )}
-          <div className="flex justify-between mt-auto pt-8">
-            <Button
-              variant="outline"
-              onClick={() => setStep("device")}
-              className="rounded-xl border-[#e6e6ea] text-[#3f4941]"
-            >
-              ← Kembali
-            </Button>
-            <Button
-              onClick={() => selectedIssues.length > 0 && setStep("estimate")}
-              disabled={selectedIssues.length === 0}
-              className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2 disabled:opacity-40"
-            >
-              Lanjut <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
         </div>
-        </FadeIn>
-      )}
+        </motion.div>
+        <div className="fixed bottom-6 left-6 right-6 flex justify-between z-40 pointer-events-none">
+          <Button
+            variant="outline"
+            onClick={() => goTo("device", -1)}
+            className="rounded-xl border-[#e6e6ea] text-[#3f4941] pointer-events-auto"
+          >
+            ← Kembali
+          </Button>
+          <Button
+            onClick={() => selectedIssues.length > 0 && goTo("estimate")}
+            disabled={selectedIssues.length === 0}
+            className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2 disabled:opacity-40 pointer-events-auto"
+          >
+            Lanjut <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </>)}
 
-      {step === "estimate" && (
-        <FadeIn className="w-full">
+      {step === "estimate" && (<>
+        <motion.div key="estimate" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-3xl mx-auto">
           <StepBar current="done" />
           <div className="text-center mb-8">
@@ -243,7 +270,7 @@ export default function ServisPage() {
               Lengkapi lokasi servis dan tinjau estimasi biaya
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 w-full">
             <Card className="bg-white border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -325,27 +352,27 @@ export default function ServisPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex justify-between mt-auto pt-8">
-            <Button
-              variant="outline"
-              onClick={() => setStep("issues")}
-              className="rounded-xl border-[#e6e6ea] text-[#3f4941]"
-            >
-              ← Kembali
-            </Button>
-            <Button
-              onClick={() => setStep("searching")}
-              className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2"
-            >
-              Cari Teknisi <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
         </div>
-        </FadeIn>
-      )}
+        </motion.div>
+        <div className="fixed bottom-6 left-6 right-6 flex justify-between z-40 pointer-events-none">
+          <Button
+            variant="outline"
+            onClick={() => goTo("issues", -1)}
+            className="rounded-xl border-[#e6e6ea] text-[#3f4941] pointer-events-auto"
+          >
+            ← Kembali
+          </Button>
+          <Button
+            onClick={() => goTo("searching")}
+            className="bg-emerald-700 hover:bg-emerald-800 rounded-xl px-6 gap-2 pointer-events-auto"
+          >
+            Cari Teknisi <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </>)}
 
       {step === "searching" && (
-        <FadeIn className="w-full">
+        <motion.div key="searching" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
           <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center animate-pulse">
             <ShieldCheck className="w-8 h-8 text-emerald-600" />
@@ -373,83 +400,74 @@ export default function ServisPage() {
             </CardContent>
           </Card>
         </div>
-        </FadeIn>
+        </motion.div>
       )}
 
       {step === "found" && (
-        <FadeIn className="w-full">
-        <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-6">
-          <div>
-            <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold px-3 py-1 mb-3">
-              Teknisi Ditemukan
-            </Badge>
-            <h1 className="text-2xl font-bold text-[#1d1d1f]">
-              Teknisi siap membantu kamu
-            </h1>
-            <p className="text-sm text-[#86868b] mt-1">
-              Berikut teknisi terbaik di sekitar lokasimu
-            </p>
+        <motion.div key="found" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
+        <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center space-y-5">
+          <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+            <CheckCircle2 className="w-6 h-6 text-emerald-600" />
           </div>
+          <p className="text-xs font-bold tracking-widest text-[#86868b] uppercase">
+            Match Confirmed
+          </p>
 
           <Card className="w-full bg-white border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
-            <CardContent className="p-6 space-y-5">
-              <div className="flex items-center gap-4">
-                <Avatar className="w-14 h-14">
-                  <AvatarFallback className="bg-emerald-100 text-emerald-700 font-bold text-lg">
-                    BS
-                  </AvatarFallback>
-                </Avatar>
-                <div className="text-left">
-                  <p className="font-bold text-[#1d1d1f] text-base">Fajar Maulid</p>
-                  <p className="text-xs text-[#86868b]">Spesialis Layar & Baterai</p>
-                  <p className="text-xs text-[#86868b]">SMK Negeri 2 Singosari</p>
+            <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
+              <Avatar className="w-24 h-24">
+                <AvatarFallback className="bg-emerald-100 text-emerald-700 font-bold text-2xl">
+                  FM
+                </AvatarFallback>
+              </Avatar>
+              <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold px-3 py-0.5">
+                Ready to Connect
+              </Badge>
+              <div>
+                <p className="font-bold text-[#1d1d1f] text-lg">Fajar Maulid</p>
+                <p className="text-sm text-[#86868b] mt-1 leading-relaxed">
+                  Level 4 Diagnostic Specialist. Over 8 years of precision micro-soldering experience.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center gap-6 pt-2 pb-2 border-t border-[#e6e6ea] w-full">
+                <div className="text-center">
+                  <p className="text-base font-bold text-[#1d1d1f]">4.9</p>
+                  <p className="text-[10px] text-[#86868b] uppercase tracking-wide">Rating</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-base font-bold text-[#1d1d1f]">1,204</p>
+                  <p className="text-[10px] text-[#86868b] uppercase tracking-wide">Repairs</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-base font-bold text-[#1d1d1f]">15m</p>
+                  <p className="text-[10px] text-[#86868b] uppercase tracking-wide">ETA</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#f5f5f7] rounded-xl p-3 text-center">
-                  <p className="text-xs text-[#86868b]">Jarak</p>
-                  <p className="text-sm font-bold text-[#1d1d1f]">2.4 km</p>
-                </div>
-                <div className="bg-[#f5f5f7] rounded-xl p-3 text-center">
-                  <p className="text-xs text-[#86868b]">Rating</p>
-                  <p className="text-sm font-bold text-[#1d1d1f]">★ 4.9 / 5</p>
-                  <p className="text-[10px] text-[#86868b]">124 ulasan</p>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <Button
-                  onClick={() => setStep("checkout")}
-                  className="w-full bg-emerald-700 hover:bg-emerald-800 rounded-xl gap-2"
-                >
-                  Konfirmasi Servis <ArrowRight className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full rounded-xl border-[#e6e6ea] text-[#3f4941]"
-                >
-                  Pilih Teknisi Lain
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-center gap-1.5 pt-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-[11px] text-[#86868b] font-medium">
-                  ReparasiHub Certified Professional
-                </span>
-              </div>
+              <Button
+                onClick={() => goTo("checkout")}
+                className="w-full bg-emerald-700 hover:bg-emerald-800 rounded-xl gap-2"
+              >
+                <WhatsAppIcon className="w-4 h-4" /> Hubungi Teknisi via WhatsApp
+              </Button>
+              <button
+                onClick={() => goTo("device", -1)}
+                className="text-sm text-[#86868b] hover:text-[#1d1d1f] transition-colors"
+              >
+                Cancel Request
+              </button>
             </CardContent>
           </Card>
         </div>
-        </FadeIn>
+        </motion.div>
       )}
 
       {step === "checkout" && (
-        <FadeIn className="w-full">
+        <motion.div key="checkout" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-3xl mx-auto space-y-6">
           <h1 className="text-3xl font-bold text-[#1d1d1f]">Checkout.</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
             <div className="space-y-4">
               <Card className="bg-white border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
                 <CardContent className="p-5 space-y-3">
@@ -530,7 +548,7 @@ export default function ServisPage() {
                   <span className="text-lg font-bold text-[#1d1d1f]">Rp 2.886.000</span>
                 </div>
                 <Button
-                  onClick={() => setStep("success")}
+                  onClick={() => goTo("success")}
                   className="w-full bg-emerald-700 hover:bg-emerald-800 rounded-xl gap-2 mt-2"
                 >
                   Bayar <ArrowRight className="w-4 h-4" />
@@ -539,11 +557,11 @@ export default function ServisPage() {
             </Card>
           </div>
         </div>
-        </FadeIn>
+        </motion.div>
       )}
 
       {step === "success" && (
-        <FadeIn className="w-full">
+        <motion.div key="success" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3, ease: "easeInOut" }} className="w-full">
         <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-6 py-8">
           <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
             <CheckCircle2 className="w-9 h-9 text-emerald-600" />
@@ -593,8 +611,10 @@ export default function ServisPage() {
             </Button>
           </div>
         </div>
-        </FadeIn>
+        </motion.div>
       )}
+      </AnimatePresence>
     </main>
+    </>
   );
 }

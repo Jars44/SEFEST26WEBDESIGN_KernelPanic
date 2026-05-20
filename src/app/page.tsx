@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import heroImage from "@/../public/images/hero_LandingPage.webp";
 import {
   ArrowRight,
   Wrench,
@@ -72,12 +73,12 @@ export default function RootPage() {
               <Button variant="outline">Pelajari Lebih Lanjut</Button>
             </div>
           </div>
-          <div className="relative w-full h-64 md:h-96 bg-muted rounded-xl overflow-hidden flex flex-col">
+          <div className="relative w-full max-w-sm md:max-w-md mx-auto h-72 md:h-[26rem] bg-muted rounded-xl overflow-hidden flex flex-col">
             <Image
-              src="/images/hero-chips.jpg"
+              src={heroImage}
               alt="Circuit board microchips"
               fill
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
             <div className="flex-1"></div>
             <div className="relative mt-2.5 mx-2.5 mb-4 p-4 bg-white rounded-xl shadow-sm flex items-center space-x-3">
@@ -157,7 +158,8 @@ export default function RootPage() {
       </section>
 
       <FadeIn>
-        <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-[2rem] bg-gray-100 min-h-[400px] flex items-center">
+        <div className="container mx-auto px-6">
+        <div className="relative w-full overflow-hidden rounded-[2rem] bg-gray-100 min-h-[400px] flex items-center">
           <Image
             src="/images/hero-background.jpg"
             alt="Vocational technician at work"
@@ -219,6 +221,7 @@ export default function RootPage() {
               </CardContent>
             </Card>
           </div>
+        </div>
         </div>
       </FadeIn>
 

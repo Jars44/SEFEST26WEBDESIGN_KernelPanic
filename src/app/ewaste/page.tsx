@@ -115,7 +115,7 @@ export default function EwastePage() {
         </div>
         <div className="relative aspect-[4/3] bg-slate-200 rounded-[2rem] overflow-hidden shadow-lg">
           <Image
-            src="/images/ewaste-hero.jpg"
+            src="/images/heroE-WastePage.webp"
             alt="E-waste reduction and repair concept"
             fill
             className="object-cover"

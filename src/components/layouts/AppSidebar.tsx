@@ -72,7 +72,7 @@ export default function AppSidebar() {
                       <Link
                         href={item.href}
                         className={cn(
-                          "relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                          "relative flex items-center gap-3 pl-5 pr-3 py-2.5 rounded text-sm font-medium transition-colors",
                           active
                             ? "text-emerald-700"
                             : "text-[#3f4941] hover:bg-[#f2f3f5] hover:text-[#1d1d1f]"
@@ -81,9 +81,12 @@ export default function AppSidebar() {
                         {active && (
                           <motion.div
                             layoutId="sidebar-active"
-                            className="absolute inset-0 bg-emerald-50 rounded-xl"
+                            className="absolute inset-0 bg-emerald-50 rounded"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
+                        )}
+                        {active && (
+                          <span className="absolute left-1.5 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-emerald-600 rounded-full" />
                         )}
                         <item.icon
                           className={cn(
@@ -109,7 +112,7 @@ export default function AppSidebar() {
               <SidebarMenuButton asChild>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#3f4941] hover:bg-[#f2f3f5] hover:text-[#1d1d1f] transition-colors"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium text-[#3f4941] hover:bg-[#f2f3f5] hover:text-[#1d1d1f] transition-colors"
                 >
                   <item.icon className="w-4 h-4 shrink-0 text-[#86868b]" />
                   {item.label}
@@ -121,7 +124,7 @@ export default function AppSidebar() {
 
         <Link
           href="/app/profile"
-          className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-[#f2f3f5] transition-colors mt-2"
+          className="flex items-center gap-3 px-3 py-3 rounded hover:bg-[#f2f3f5] transition-colors mt-2"
         >
           <Avatar className="w-9 h-9 shrink-0">
             <AvatarFallback className="bg-emerald-100 text-emerald-700 font-bold text-sm">

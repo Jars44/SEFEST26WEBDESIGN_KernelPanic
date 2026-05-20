@@ -74,6 +74,7 @@ export default function DampakPage() {
         <FadeInItem>
           <Card className="relative overflow-hidden border border-emerald-200 shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-emerald-50 h-full">
             <div className="absolute -top-6 -left-6 w-24 h-24 bg-emerald-500/25 rounded-full blur-2xl" />
+            <TreePine className="absolute bottom-2 right-3 w-16 h-16 text-emerald-300/50" />
             <CardContent className="relative z-10 p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <p className="text-[10px] font-bold tracking-widest text-emerald-600 uppercase">

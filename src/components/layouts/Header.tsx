@@ -6,12 +6,18 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Menu, Layout, Wrench, User, Settings } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const navLinks = [
     { name: "Layanan", href: "/", active: true },
     { name: "Tentang Kami", href: "/tentang-kami", active: false },
@@ -20,10 +26,13 @@ export default function Header() {
   ].map(link => ({ ...link, active: link.href === pathname || (pathname === "/" && link.href === "/") }));
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+    <header className={cn(
+      "fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50 transition-all duration-500 ease-out",
+      mounted ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+    )}>
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center md:hidden justify-between w-full px-4">
-          <span className="text-foreground font-bold text-xl tracking-tight">ReparasiHub</span>
+          <span className="text-foreground font-bold text-xl tracking-tight"><Link href="/">ReparasiHub</Link></span>
           <Sheet>
             <SheetTrigger asChild>
               <button className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
@@ -80,14 +89,14 @@ export default function Header() {
           </Sheet>
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <Link href="/" className="hidden md:flex items-center gap-3">
           <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-sm">
             <Image src={"/logo.png"} alt="Reparasi Hub Logo" width={50} height={50} />
           </div>
           <span className="text-foreground font-bold text-xl tracking-tight">
             ReparasiHub
           </span>
-        </div>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
@@ -96,7 +105,7 @@ export default function Header() {
               href={link.href}
               className={cn(
                 "relative text-sm font-medium transition-colors duration-200",
-                link.active ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                link.active ? "text-[#064E3B]" : "text-[#064E3B]/70 hover:text-[#064E3B]"
               )}
             >
               {link.name}

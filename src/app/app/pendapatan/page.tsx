@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,6 @@ import {
   Bar,
   XAxis,
   YAxis,
-  ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
 import { Wallet, ArrowUpRight, ArrowDownLeft } from "lucide-react";
@@ -39,6 +38,13 @@ const weeklyData = [
   { day: "Jum", value: 950000 },
   { day: "Sab", value: 700000 },
   { day: "Min", value: 400000 },
+];
+
+const monthlyData = [
+  { day: "Mg 1", value: 4200000 },
+  { day: "Mg 2", value: 5800000 },
+  { day: "Mg 3", value: 3900000 },
+  { day: "Mg 4", value: 4250000 },
 ];
 
 const transactions = [
@@ -76,6 +82,15 @@ export default function PendapatanPage() {
   const [withdrawOpen, setWithdrawOpen] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawBank, setWithdrawBank] = useState("");
+  const [barSize, setBarSize] = useState(48);
+  const [period, setPeriod] = useState<"week" | "month">("week");
+
+  useEffect(() => {
+    const update = () => setBarSize(window.innerWidth < 768 ? 28 : 48);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   function handleWithdraw() {
     if (!withdrawAmount || !withdrawBank) {
@@ -101,36 +116,42 @@ export default function PendapatanPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start">
         <div className="space-y-4">
           <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
-            <div className="absolute -top-8 -left-8 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl" />
+            <div className="absolute -top-16 -right-16 w-32 h-32 bg-emerald-500/10 rounded-full" />
             <CardContent className="relative z-10 p-6 space-y-5 flex flex-col h-full">
               <div className="flex items-start justify-between flex-wrap gap-4">
                 <div>
                   <p className="text-[10px] font-bold tracking-widest text-[#86868b] uppercase mb-1">
                     Total Minggu Ini
                   </p>
-                  <AnimatedNumber value={4250000} prefix="Rp " className="text-3xl font-bold text-[#1d1d1f]" />
+                  <AnimatedNumber value={period === "week" ? 4250000 : 18150000} prefix="Rp " className="text-3xl font-bold text-[#1d1d1f]" />
                 </div>
                 <div className="flex bg-[#f2f3f5] rounded-xl p-1 gap-1">
-                  {["Minggu Ini", "Bulan Ini"].map((label, i) => (
+                  {(
+                    [
+                      { value: "week", label: "Minggu Ini" },
+                      { value: "month", label: "Bulan Ini" },
+                    ] as { value: "week" | "month"; label: string }[]
+                  ).map((tab) => (
                     <button
-                      key={label}
+                      key={tab.value}
+                      onClick={() => setPeriod(tab.value)}
                       className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                        i === 0
+                        period === tab.value
                           ? "bg-white text-[#1d1d1f] shadow-sm"
                           : "text-[#86868b] hover:text-[#3f4941]"
                       }`}
                     >
-                      {label}
+                      {tab.label}
                     </button>
                   ))}
                 </div>
               </div>
 
               <ChartContainer config={chartConfig} className="h-full min-h-48 w-full flex-1">
-                <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={weeklyData}
-                    barSize={28}
+                    key={period}
+                    data={period === "week" ? weeklyData : monthlyData}
+                    barSize={barSize}
                     margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
                   >
                     <XAxis
@@ -154,9 +175,11 @@ export default function PendapatanPage() {
                       dataKey="value"
                       fill="#2e8b57"
                       radius={[6, 6, 0, 0]}
+                      isAnimationActive={true}
+                      animationDuration={800}
+                      animationEasing="ease-out"
                     />
                   </BarChart>
-                </ResponsiveContainer>
               </ChartContainer>
             </CardContent>
           </Card>
@@ -164,7 +187,7 @@ export default function PendapatanPage() {
 
         <div className="space-y-4">
           <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
-            <div className="absolute -top-6 -left-6 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl" />
+            <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 rounded-full" />
             <CardContent className="relative z-10 p-5 space-y-4">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-emerald-50 rounded-lg flex items-center justify-center">

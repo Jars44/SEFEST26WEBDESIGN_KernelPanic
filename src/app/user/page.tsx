@@ -1,9 +1,10 @@
 "use client";
 
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Wrench, Clock, CheckCircle2, Circle, MessageCircle, Navigation } from "lucide-react";
+import { Wrench, Clock, CheckCircle2, Circle, Navigation } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
 import Link from "next/link";
@@ -214,11 +215,12 @@ export default function UserDashboardPage() {
         </div>
 
         <div className="space-y-4">
-          <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
+          <Card className="relative overflow-hidden border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white min-h-[120px]">
             <Image
-              src="/images/hero-chips.jpg"
+              src="/images/hero_LandingPage.webp"
               alt="Circuit board background"
               fill
+              sizes="280px"
               className="object-cover opacity-10"
             />
             <CardContent className="relative z-10 p-5 space-y-3">
@@ -242,7 +244,7 @@ export default function UserDashboardPage() {
                 className="w-full h-10 rounded-xl bg-emerald-700 hover:bg-emerald-800 font-semibold shadow-none text-sm gap-2"
                 onClick={() => toast.info("Membuka WhatsApp ke Fajar Maulid...")}
               >
-                <MessageCircle className="w-4 h-4" />
+                <WhatsAppIcon className="w-4 h-4" />
                 Chat
               </Button>
             </CardContent>

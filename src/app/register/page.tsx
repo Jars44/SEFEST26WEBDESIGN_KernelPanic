@@ -23,9 +23,9 @@ export default function RegisterPage() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   return (
-    <main className="py-34 min-h-screen grid grid-cols-1 lg:grid-cols-2 font-sans">
-      <FadeIn direction="left">
-      <div className="bg-[#f8fafc] p-12 flex flex-col justify-center">
+    <main className="min-h-[calc(100vh-4rem)] mt-16 grid grid-cols-1 lg:grid-cols-2 font-sans">
+      <FadeIn direction="left" className="hidden lg:block h-full">
+      <div className="bg-[#f8fafc] p-12 flex flex-col justify-center h-full">
         <div className="max-w-md mx-auto lg:mx-20 space-y-8">
           <div className="inline-flex items-center gap-2 bg-emerald-100/50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -75,8 +75,8 @@ export default function RegisterPage() {
       </div>
       </FadeIn>
 
-      <FadeIn direction="right">
-      <div className="flex items-center justify-center p-6 bg-white">
+      <FadeIn direction="right" className="h-full">
+      <div className="flex items-center justify-center p-6 bg-white h-full">
         <Card className="w-full max-w-[440px] border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-4">
           <CardContent className="pt-10 pb-8 px-8 space-y-6">
             <div className="flex bg-slate-100 rounded-xl p-1">

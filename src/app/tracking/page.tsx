@@ -1,13 +1,15 @@
 "use client";
 
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { MessageCircle, MapPin, CheckCircle2, Circle, Navigation, ArrowLeft } from "lucide-react";
+import { MapPin, CheckCircle2, Circle, Navigation, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { FadeIn } from "@/components/motion/fade-in";
+import ServisHeader from "@/components/layouts/ServisHeader";
 
 const timeline = [
   {
@@ -44,7 +46,9 @@ export default function TrackingPage() {
   const router = useRouter();
 
   return (
-    <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center py-12 px-4">
+    <>
+      <ServisHeader />
+      <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center pt-20 pb-12 px-4">
       <FadeIn>
       <div className="w-full max-w-xl space-y-6">
         <button
@@ -67,7 +71,7 @@ export default function TrackingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-[1fr_auto] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
           <Card className="border border-[#e6e6ea] rounded-2xl overflow-hidden shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-full">
             <CardContent className="p-0 h-full">
               <div className="relative w-full h-full min-h-48 bg-emerald-50">
@@ -109,7 +113,7 @@ export default function TrackingPage() {
             </CardContent>
           </Card>
 
-          <Card className="border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] w-44">
+          <Card className="border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)] md:w-44">
             <CardContent className="p-4 space-y-3">
               <div className="flex items-center gap-2">
                 <Avatar className="w-10 h-10">
@@ -139,7 +143,7 @@ export default function TrackingPage() {
                 className="w-full h-9 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow-none text-xs gap-1.5"
                 onClick={() => toast.info("Membuka WhatsApp ke Fajar Maulid...")}
               >
-                <MessageCircle className="w-3.5 h-3.5" />
+                <WhatsAppIcon className="w-3.5 h-3.5" />
                 WhatsApp
               </Button>
             </CardContent>
@@ -187,5 +191,6 @@ export default function TrackingPage() {
       </div>
       </FadeIn>
     </main>
+    </>
   );
 }

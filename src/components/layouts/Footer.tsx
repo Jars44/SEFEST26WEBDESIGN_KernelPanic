@@ -14,6 +14,7 @@ export default function Footer() {
     Perusahaan: [
       { label: "Tentang Kami", href: "/tentang-kami" },
       { label: "E-Waste Inisiatif", href: "/ewaste" },
+      { label: "Panduan", href: "/panduan" },
     ],
     "Legal & Dukungan": [
       { label: "Kebijakan Privasi", href: "/kebijakan-privasi" },

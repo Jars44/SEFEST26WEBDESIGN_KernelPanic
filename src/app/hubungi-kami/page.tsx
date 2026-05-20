@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,7 +19,7 @@ import {
 
 const contacts = [
   {
-    icon: <MessageCircle className="w-5 h-5 text-emerald-600" />,
+    icon: <WhatsAppIcon className="w-5 h-5 text-emerald-600" />,
     title: "WhatsApp Support",
     description: "Dapatkan respon cepat untuk konsultasi perbaikan perangkat Anda.",
     action: { label: "Hubungi via WhatsApp →", href: "https://wa.me/6281234567890" },
