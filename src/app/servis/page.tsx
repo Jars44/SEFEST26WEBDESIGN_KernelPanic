@@ -100,6 +100,8 @@ export default function ServisPage() {
   const [step, setStep] = useState<Step>("device");
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
+  const [customIssue, setCustomIssue] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("cod");
 
   useEffect(() => {
     if (step === "searching") {
@@ -115,10 +117,10 @@ export default function ServisPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center py-12 px-4">
+    <main className="min-h-screen bg-[#fbfbfd] font-sans flex flex-col items-center justify-center py-12 px-4">
       {step === "device" && (
-        <FadeIn>
-        <div className="w-full max-w-2xl">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-2xl mx-auto">
           <StepBar current="device" />
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-[#1d1d1f]">
@@ -128,7 +130,7 @@ export default function ServisPage() {
               Pilih perangkat yang ingin kamu servis
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-4 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {DEVICES.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
@@ -158,7 +160,7 @@ export default function ServisPage() {
               </button>
             ))}
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-auto pt-8">
             <Button
               onClick={() => selectedDevice && setStep("issues")}
               disabled={!selectedDevice}
@@ -172,8 +174,8 @@ export default function ServisPage() {
       )}
 
       {step === "issues" && (
-        <FadeIn>
-        <div className="w-full max-w-2xl">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-2xl mx-auto">
           <StepBar current="issues" />
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-[#1d1d1f]">
@@ -201,13 +203,23 @@ export default function ServisPage() {
               );
             })}
           </div>
-          <div className="flex justify-between">
+          {selectedIssues.includes("Permasalahan lain") && (
+            <div className="mb-10">
+              <Input
+                placeholder="Jelaskan permasalahan kamu..."
+                value={customIssue}
+                onChange={(e) => setCustomIssue(e.target.value)}
+                className="rounded-xl border-[#e6e6ea] text-sm"
+              />
+            </div>
+          )}
+          <div className="flex justify-between mt-auto pt-8">
             <Button
               variant="outline"
               onClick={() => setStep("device")}
               className="rounded-xl border-[#e6e6ea] text-[#3f4941]"
             >
-              ← Back
+              ← Kembali
             </Button>
             <Button
               onClick={() => selectedIssues.length > 0 && setStep("estimate")}
@@ -222,8 +234,8 @@ export default function ServisPage() {
       )}
 
       {step === "estimate" && (
-        <FadeIn>
-        <div className="w-full max-w-3xl">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-3xl mx-auto">
           <StepBar current="done" />
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-[#1d1d1f]">Review & Confirm</h1>
@@ -231,7 +243,7 @@ export default function ServisPage() {
               Lengkapi lokasi servis dan tinjau estimasi biaya
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 w-full">
             <Card className="bg-white border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -313,13 +325,13 @@ export default function ServisPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between mt-auto pt-8">
             <Button
               variant="outline"
               onClick={() => setStep("issues")}
               className="rounded-xl border-[#e6e6ea] text-[#3f4941]"
             >
-              Kembali
+              ← Kembali
             </Button>
             <Button
               onClick={() => setStep("searching")}
@@ -333,8 +345,8 @@ export default function ServisPage() {
       )}
 
       {step === "searching" && (
-        <FadeIn>
-        <div className="w-full max-w-md flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
           <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center animate-pulse">
             <ShieldCheck className="w-8 h-8 text-emerald-600" />
           </div>
@@ -365,8 +377,8 @@ export default function ServisPage() {
       )}
 
       {step === "found" && (
-        <FadeIn>
-        <div className="w-full max-w-md flex flex-col items-center text-center space-y-6">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-6">
           <div>
             <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold px-3 py-1 mb-3">
               Teknisi Ditemukan
@@ -434,19 +446,20 @@ export default function ServisPage() {
       )}
 
       {step === "checkout" && (
-        <FadeIn>
-        <div className="w-full max-w-3xl">
-          <h1 className="text-3xl font-bold text-[#1d1d1f] mb-8">Checkout.</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-3xl mx-auto space-y-6">
+          <h1 className="text-3xl font-bold text-[#1d1d1f]">Checkout.</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             <div className="space-y-4">
               <Card className="bg-white border border-[#e6e6ea] rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
                 <CardContent className="p-5 space-y-3">
                   <h2 className="text-sm font-bold text-[#1d1d1f]">Metode Pembayaran</h2>
-                  <label className="flex items-center gap-3 p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 cursor-pointer">
+                  <label onClick={() => setPaymentMethod("cod")} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${paymentMethod === "cod" ? "border-2 border-emerald-500 bg-emerald-50" : "border border-[#e6e6ea] hover:border-emerald-300"}`}>
                     <input
                       type="radio"
                       name="payment"
-                      defaultChecked
+                      checked={paymentMethod === "cod"}
+                      readOnly
                       className="accent-emerald-600"
                     />
                     <div>
@@ -456,10 +469,12 @@ export default function ServisPage() {
                       <p className="text-xs text-[#86868b]">COD — bayar saat teknisi tiba</p>
                     </div>
                   </label>
-                  <label className="flex items-center gap-3 p-3 rounded-xl border border-[#e6e6ea] cursor-pointer hover:border-emerald-300">
+                  <label onClick={() => setPaymentMethod("transfer")} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${paymentMethod === "transfer" ? "border-2 border-emerald-500 bg-emerald-50" : "border border-[#e6e6ea] hover:border-emerald-300"}`}>
                     <input
                       type="radio"
                       name="payment"
+                      checked={paymentMethod === "transfer"}
+                      readOnly
                       className="accent-emerald-600"
                     />
                     <div>
@@ -528,8 +543,8 @@ export default function ServisPage() {
       )}
 
       {step === "success" && (
-        <FadeIn>
-        <div className="w-full max-w-md flex flex-col items-center text-center space-y-6 py-8">
+        <FadeIn className="w-full">
+        <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-6 py-8">
           <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
             <CheckCircle2 className="w-9 h-9 text-emerald-600" />
           </div>

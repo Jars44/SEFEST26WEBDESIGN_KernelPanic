@@ -129,7 +129,7 @@ export default function HelpCenterPage() {
           </p>
         </div>
         <div className="md:col-span-3">
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-4 border-none">
             {faqs.map((faq, i) => (
               <AccordionItem
                 key={i}
@@ -162,7 +162,7 @@ export default function HelpCenterPage() {
               </p>
             </div>
             <Button
-              className="bg-[#128C7E] hover:bg-[#075E54] text-white rounded-xl h-12 px-8 gap-2 font-bold transition-colors"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl h-12 px-8 gap-2 font-bold transition-colors"
               onClick={() => toast.info("Membuka WhatsApp...")}
             >
               <MessageCircle className="w-5 h-5 fill-current" />

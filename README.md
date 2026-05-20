@@ -23,4 +23,5 @@ Aplikasi ini memiliki sistem routing fungsional dengan antarmuka berbasis peran 
 * `/servis` — Alur Pemesanan Servis (Troubleshooting Wizard)
 * `/tracking` — Pelacakan Pesanan & Status Teknisi
 * `/app` — Dashboard Teknisi (Menerima pesanan, inventaris, pendapatan bulanan)
+* `/portal` — Pemilihan Portal/Peran (Masuk ke dashboard Teknisi atau Pelanggan)
 * `/user` — Dashboard Pelanggan (Riwayat servis, kalkulator jejak karbon, daftar gadget)

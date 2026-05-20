@@ -191,8 +191,8 @@ export default function InventorisPage() {
       </div>
 
       <Card className="border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
-        <CardContent className="p-0">
-          <div className="grid grid-cols-[1fr_120px_80px_140px_80px] gap-4 px-6 py-3 border-b border-[#f2f3f5]">
+        <CardContent className="p-0 overflow-x-auto">
+          <div className="min-w-[600px] grid grid-cols-[1fr_120px_80px_140px_80px] gap-4 px-6 py-3 border-b border-[#f2f3f5]">
             {["Nama Komponen", "Kategori", "Stok", "Harga Modal", "Aksi"].map(
               (h) => (
                 <p
@@ -208,7 +208,7 @@ export default function InventorisPage() {
           {parts.map((p, i) => (
             <div
               key={i}
-              className="grid grid-cols-[1fr_120px_80px_140px_80px] gap-4 px-6 py-4 border-b border-[#f2f3f5] last:border-0 items-center hover:bg-[#fbfbfd] transition-colors"
+              className="min-w-[600px] grid grid-cols-[1fr_120px_80px_140px_80px] gap-4 px-6 py-4 border-b border-[#f2f3f5] last:border-0 items-center hover:bg-[#fbfbfd] transition-colors"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-9 h-9 bg-[#f2f3f5] rounded-xl flex items-center justify-center shrink-0">

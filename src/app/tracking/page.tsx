@@ -57,13 +57,13 @@ export default function TrackingPage() {
 
         <div className="text-center space-y-1">
           <p className="text-[10px] font-bold tracking-widest text-[#86868b] uppercase">
-            Order #RH-8492
+            Order #RPH-2023-8901
           </p>
           <h1 className="text-2xl font-bold text-[#1d1d1f]">
             Teknisi sedang menuju ke lokasimu
           </h1>
           <p className="text-sm text-[#86868b]">
-            Estimasi kedatangan: 14:30 WIB
+            MacBook Pro 16&quot; — Penggantian Logic Board &amp; Baterai
           </p>
         </div>
 
