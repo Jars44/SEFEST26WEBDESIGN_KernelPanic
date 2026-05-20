@@ -73,13 +73,14 @@ export default function RootPage() {
               <Button variant="outline">Pelajari Lebih Lanjut</Button>
             </div>
           </div>
-          <div className="relative w-full max-w-sm md:max-w-md mx-auto h-72 md:h-[26rem] bg-muted rounded-xl overflow-hidden flex flex-col">
+          <div className="relative w-full max-w-md md:max-w-lg md:ml-auto md:mr-0 mx-0 h-72 md:h-[26rem] bg-muted rounded-xl overflow-hidden flex flex-col">
             <Image
               src={heroImage}
               alt="Circuit board microchips"
               fill
               className="object-cover w-full h-full"
             />
+            <div className="absolute inset-0 bg-[linear-gradient(to_top,_rgba(255,255,255,0.8)_0%,_rgba(255,255,255,0)_100%)]" />
             <div className="flex-1"></div>
             <div className="relative mt-2.5 mx-2.5 mb-4 p-4 bg-white rounded-xl shadow-sm flex items-center space-x-3">
               <div className="flex items-center justify-center w-10 h-10 bg-green-200 rounded-full">

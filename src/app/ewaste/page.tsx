@@ -80,21 +80,21 @@ export default function EwastePage() {
       title: "Anatomi Baterai Lithium",
       description:
         "Membongkar siklus hidup komponen paling krusial dalam mobilitas modern.",
-      image: "/images/journal-battery.jpg",
+      image: "/images/seniPemulihanKaca.webp",
     },
     {
       category: "TEKNIK",
       title: "Seni Pemulihan Kaca",
       description:
         "Bagaimana teknologi mengembalikan integritas struktural layar yang hancur tanpa limbah ekstra.",
-      image: "/images/journal-glass.jpg",
+      image: "/images/anatomiBateraiLithium.webp",
     },
     {
       category: "DAMPAK",
       title: "Ekonomi Sirkular Mikro",
       description:
         "Membangun ekosistem berkelanjutan dari bengkel perbaikan lokal ke dampak global.",
-      image: "/images/journal-circular.jpg",
+      image: "/images/ekonomiSirkularMikro.webp",
     },
   ];
 
@@ -195,7 +195,7 @@ export default function EwastePage() {
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
                 />
               </div>
               <div className="space-y-2">
