@@ -84,7 +84,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="p-8 space-y-6 font-sans max-w-5xl">
+    <main className="p-8 space-y-6 font-sans w-full">
       <FadeIn>
       <div className="flex items-start gap-6 mb-8">
         <div className="relative">
@@ -108,7 +108,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-6">
         <div className="space-y-6">
           <Card className="border border-[#e6e6ea] shadow-[0_2px_15px_rgba(0,0,0,0.03)] rounded-2xl bg-white">
             <CardContent className="p-6">

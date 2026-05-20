@@ -65,7 +65,7 @@ export default function TentangKamiPage() {
             <div className="pt-8">
               <div className="relative aspect-video w-full bg-slate-100 rounded-[2rem] overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/about-hero.jpg"
+                  src="/images/hero_tentangKami.webp"
                   alt="Students learning technology and empowering the next generation"
                   fill
                   className="object-cover"
